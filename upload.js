@@ -4,9 +4,8 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 try {
-  const email = process.env.SCREEPS_EMAIL;
   const token = process.env.SCREEPS_TOKEN;
-  if(email === "" || email === undefined || token === "" || token === undefined) {
+  if(token === "" || token === undefined) {
     throw new Error("Screeps login info is missing!");
   }
   let dest = config.sim;
