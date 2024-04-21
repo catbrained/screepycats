@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "module": "nodenext",
+    "target": "es2018",
+    "outDir": "dist",
+    "strict": true,
+    "noImplicitReturns": true,
+    "allowUnreachableCode": false,
+    "allowSyntheticDefaultImports": true
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

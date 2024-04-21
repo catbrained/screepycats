@@ -1,0 +1,4 @@
+.direnv/
+.envrc.private
+dist/
+node_modules/
