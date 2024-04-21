@@ -1,0 +1,12 @@
+{
+  "sim": {
+    "hostname": "screeps.com",
+    "port": 443,
+    "branch": "sim"
+  },
+  "main": {
+    "hostname": "screeps.com",
+    "port": 443,
+    "branch": "main"
+  }
+}
