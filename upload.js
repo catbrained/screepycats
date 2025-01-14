@@ -1,32 +1,44 @@
-const https = require("node:https");
-const config = require("./screeps.json");
-const fs = require("node:fs");
-const path = require("node:path");
+import { request } from "node:https";
+import config from "./screeps.json" with { type: "json" };
+import { readdirSync, readFileSync } from "node:fs";
+import { parse, join } from "node:path";
 
 try {
   const token = process.env.SCREEPS_TOKEN;
-  if(token === "" || token === undefined) {
+  if (token === "" || token === undefined) {
     throw new Error("Screeps login info is missing!");
   }
   let dest = config.sim;
-  if(process.argv[2]) {
+  if (process.argv[2]) {
     dest = config[process.argv[2]];
-    if(!dest) {
-      throw new Error(`destination '${process.argv[2]}' not found in screeps.json!`)
+    if (!dest) {
+      throw new Error(
+        `destination '${process.argv[2]}' not found in screeps.json!`,
+      );
     }
   }
   const modules = {};
-  const entries = fs.readdirSync("./dist", { encoding: "utf8", withFileTypes: true, recursive: true });
-  for(const entry of entries) {
-    if(entry.isFile()) {
+  const entries = readdirSync("./dist", {
+    encoding: "utf8",
+    withFileTypes: true,
+    recursive: true,
+  });
+  for (const entry of entries) {
+    if (entry.isFile()) {
+      const path = parse(entry.name);
+      if (path.ext == ".map") {
+        continue;
+      }
       // Strip file extension (i.e., `.js`)
-      const name = path.parse(entry.name).name;
-      modules[name] = fs.readFileSync(path.join(entry.path, entry.name), { encoding: "utf8" });
+      const name = path.name;
+      modules[name] = readFileSync(join(entry.parentPath, entry.name), {
+        encoding: "utf8",
+      });
     }
   }
   const data = {
     branch: dest.branch,
-    modules: modules
+    modules: modules,
   };
 
   const options = {
@@ -36,16 +48,16 @@ try {
     method: "POST",
     headers: {
       "X-Token": token,
-      "Content-Type": "application/json; charset=utf-8"
-    }
+      "Content-Type": "application/json; charset=utf-8",
+    },
   };
 
-  const req = https.request(options, (res) => {
+  const req = request(options, (res) => {
     console.log("status code:", res.statusCode);
 
     res.on("data", (d) => {
       const answer = JSON.parse(d);
-      if(answer.ok === 1) {
+      if (answer.ok === 1) {
         console.log("Upload OK!");
       } else {
         console.error("Upload FAILED!");

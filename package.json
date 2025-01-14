@@ -1,1 +1,8 @@
-{"devDependencies":{"@types/node":"^20.12.7","@types/screeps":"^3.3.8"}}
+{
+  "devDependencies": {
+    "@types/lodash": "^4.17.14",
+    "@types/node": "^22.10.6",
+    "@types/screeps": "^3.3.8"
+  },
+  "type": "module"
+}

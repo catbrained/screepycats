@@ -2,7 +2,7 @@
   description = "My code for Screeps";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
   };
 
   outputs = { self, nixpkgs }:
@@ -17,7 +17,12 @@
         in
         {
           default = pkgs.mkShellNoCC {
-            nativeBuildInputs = [ pkgs.typescript pkgs.nodePackages_latest.pnpm pkgs.nodePackages_latest.nodejs ];
+            nativeBuildInputs = [
+              pkgs.typescript
+              pkgs.nodePackages_latest.nodejs
+              pkgs.yarn
+              pkgs.nodePackages_latest.prettier
+            ];
             shellHook = ''
               git log --oneline -3
             '';

@@ -1,14 +1,30 @@
 {
   "compilerOptions": {
-    "module": "nodenext",
-    "target": "es2018",
-    "outDir": "dist",
+    "module": "commonjs",
+    "lib": [
+      "es6"
+    ],
+    "target": "es6",
+    "moduleResolution": "Node",
+    "sourceMap": true,
     "strict": true,
+    "experimentalDecorators": true,
     "noImplicitReturns": true,
+    "allowSyntheticDefaultImports": true,
     "allowUnreachableCode": false,
-    "allowSyntheticDefaultImports": true
+    "types": [
+      "node",
+      "screeps"
+    ],
+    "outDir": "dist"
   },
+  "include": [
+    "./**/*.ts",
+    "./**/*.d.ts"
+  ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "dist",
+    ".git"
   ]
 }
